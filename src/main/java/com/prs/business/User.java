@@ -14,7 +14,9 @@ public class User {
 	private String lastName;
 	private String phoneNumber;
 	private String email;
+	@Column(name = "isReviewer")
 	private boolean reviewer;
+	@Column(name = "isAdmin")
 	private boolean admin;
 	
 	public User(int id, String userName, String password, String firstName, String lastName, String phoneNumber,
