@@ -47,18 +47,18 @@ import com.prs.db.ProductRepo;
 			return productRepo.save(product);
 		}
 		
-		@DeleteMapping("/{id}") 
-		public Product delete(@PathVariable int id) {
-			Optional<Product> product = productRepo.findById(id);
-			if (product.isPresent()) {
-				productRepo.delete(product.get());
-			}
-			else {
-				System.out.println("Delete Error - product not found for id: "+id);
-			}
-			return Product.getId();
-		}
-		
+//		@DeleteMapping("/{id}") 
+//		public Product delete(@PathVariable int id) {
+//			Optional<Product> product = productRepo.findById(id);
+//			if (product.isPresent()) {
+//				productRepo.delete(product.get());
+//			}
+//			else {
+//				System.out.println("Delete Error - product not found for id: "+id);
+//			}
+//			return Product.getId();
+//		}
+//		
 
 
 	}
