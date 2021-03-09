@@ -4,21 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class LineItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int requestID;
-	private int productID;
+	@ManyToOne
+	@JoinColumn(name="RequestID")
+	private Request request;
+	@ManyToOne
+	@JoinColumn(name="productID")
+	private Product product;
 	private int quantity;
 	
-	public LineItem(int id, int requestID, int productID, int quantity) {
+	public LineItem(int id, Request requestID, Product productID, int quantity) {
 		super();
 		this.id = id;
-		this.requestID = requestID;
-		this.productID = productID;
+		this.request = requestID;
+		this.product = productID;
 		this.quantity = quantity;
 	}
 
@@ -34,20 +40,20 @@ public class LineItem {
 		this.id = id;
 	}
 
-	public int getRequestID() {
-		return requestID;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setRequestID(int requestID) {
-		this.requestID = requestID;
+	public void setRequest(Request requestID) {
+		this.request = requestID;
 	}
 
-	public int getProductID() {
-		return productID;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductID(int productID) {
-		this.productID = productID;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public int getQuantity() {
@@ -60,7 +66,7 @@ public class LineItem {
 
 	@Override
 	public String toString() {
-		return "LineItem [id=" + id + ", requestID=" + requestID + ", productID=" + productID + ", quantity=" + quantity
+		return "LineItem [id=" + id + ", requestID=" + request + ", productID=" + product + ", quantity=" + quantity
 				+ "]";
 	}
 	

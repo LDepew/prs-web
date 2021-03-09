@@ -11,7 +11,7 @@ import com.prs.db.RequestRepo;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/requests")
 public class RequestController {
 	
 	@Autowired

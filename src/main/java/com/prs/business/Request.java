@@ -3,35 +3,34 @@ package com.prs.business;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Request {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int userID;
+	@ManyToOne
+	@JoinColumn(name = "UserID")
+	private User user;
 	private String description;
 	private String justification;
 	private LocalDate dateNeeded;
 	private String deliveryMode;
-	private int statusID;
+	private String status;
 	private double total;
 	private LocalDateTime submittedDate;
 	
-	public Request(int id, int userID, String description, String justification, LocalDate dateNeeded,
-			String deliveryMode, int statusID, double total, LocalDateTime submittedDate) {
+	public Request(int id, User user, String description, String justification, LocalDate dateNeeded,
+			String deliveryMode, String status, double total, LocalDateTime submittedDate) {
 		super();
 		this.id = id;
-		this.userID = userID;
+		this.user = user;
 		this.description = description;
 		this.justification = justification;
 		this.dateNeeded = dateNeeded;
 		this.deliveryMode = deliveryMode;
-		this.statusID = statusID;
+		this.status = status;
 		this.total = total;
 		this.submittedDate = submittedDate;
 	}
@@ -48,12 +47,12 @@ public class Request {
 		this.id = id;
 	}
 
-	public int getUserID() {
-		return userID;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getDescription() {
@@ -88,12 +87,12 @@ public class Request {
 		this.deliveryMode = deliveryMode;
 	}
 
-	public int getStatusID() {
-		return statusID;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStatusID(int statusID) {
-		this.statusID = statusID;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public double getTotal() {
@@ -114,11 +113,11 @@ public class Request {
 
 	@Override
 	public String toString() {
-		return "Request [id=" + id + ", userID=" + userID + ", description=" + description + ", justification="
-				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", statusID="
-				+ statusID + ", total=" + total + ", submittedDate=" + submittedDate + "]";
+		return "Request [id=" + id + ", user=" + user + ", description=" + description + ", justification="
+				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", status=" + status
+				+ ", total=" + total + ", submittedDate=" + submittedDate + "]";
 	}
 	
 	
-
+	
 }
