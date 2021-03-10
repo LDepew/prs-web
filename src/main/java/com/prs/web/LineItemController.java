@@ -27,6 +27,12 @@ public class LineItemController {
 		return lineItemRepo.findById(id).get();
 	}
 	
+	@GetMapping("/lines-for-pr/{id}")
+	public List<LineItem> allLineItems(@PathVariable int id) {
+		// select * from lineitems where request id = {id}
+		return lineItemRepo.findAllByRequestId(id);
+	}
+	
 	@PostMapping("/") 
 	public LineItem create(@RequestBody LineItem lineItem) {
 		return lineItemRepo.save(lineItem);
