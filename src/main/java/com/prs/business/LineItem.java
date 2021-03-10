@@ -20,11 +20,11 @@ public class LineItem {
 	private Product product;
 	private int quantity;
 	
-	public LineItem(int id, Request requestID, Product productID, int quantity) {
+	public LineItem(int id, Request request, Product product, int quantity) {
 		super();
 		this.id = id;
-		this.request = requestID;
-		this.product = productID;
+		this.request = request;
+		this.product = product;
 		this.quantity = quantity;
 	}
 
@@ -44,8 +44,8 @@ public class LineItem {
 		return request;
 	}
 
-	public void setRequest(Request requestID) {
-		this.request = requestID;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
 	public Product getProduct() {
@@ -63,12 +63,7 @@ public class LineItem {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
-	@Override
-	public String toString() {
-		return "LineItem [id=" + id + ", requestID=" + request + ", productID=" + product + ", quantity=" + quantity
-				+ "]";
-	}
+	
 	
 	
 

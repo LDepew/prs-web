@@ -7,15 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.prs.business.LineItem;
+import com.prs.business.Request;
 import com.prs.db.LineItemRepo;
+import com.prs.db.RequestRepo;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/lineItems")
+@RequestMapping("/api/line-items")
 public class LineItemController {
 	
 	@Autowired
 	private LineItemRepo lineItemRepo;
+	
+	@Autowired
+	private RequestRepo requestRepo;
+	
 
 	@GetMapping("/")
 	public List<LineItem> getAll() {
@@ -27,15 +33,31 @@ public class LineItemController {
 		return lineItemRepo.findById(id).get();
 	}
 	
-	@GetMapping("/lines-for-pr/{id}")
-	public List<LineItem> allLineItems(@PathVariable int id) {
-		// select * from lineitems where request id = {id}
-		return lineItemRepo.findAllByRequestId(id);
+	@PostMapping("/")
+	public LineItem addLineItem(@RequestBody LineItem lineItem) {
+		lineItemRepo.save(lineItem);
+		recalculateLineItemValue(lineItem);
+		return lineItem;
 	}
 	
-	@PostMapping("/") 
-	public LineItem create(@RequestBody LineItem lineItem) {
-		return lineItemRepo.save(lineItem);
+	private void recalculateLineItemValue(LineItem lineItem) {
+		Request r = lineItem.getRequest();
+		List<LineItem> lineItem1 = 
+				lineItemRepo.findAllByRequestId(r.getId());
+		double newTotal = 0.0;
+		for (LineItem lineCollect:lineItem1) {
+			newTotal += lineCollect.getQuantity()*lineCollect.getProduct().getPrice();
+		}
+		
+		r.setTotal(newTotal);
+		requestRepo.save(r);
+		
+	}
+	
+	@GetMapping("/lines-for-pr/{id}")
+	public List<LineItem> allLineItems(@PathVariable int id) {
+		// select * from line-items where request id = {id}
+		return lineItemRepo.findAllByRequestId(id);
 	}
 	
 	@PutMapping("/") 
