@@ -20,9 +20,10 @@ public class Request {
 	private String status;
 	private double total;
 	private LocalDateTime submittedDate;
+	private String reasonForRejection;
 	
 	public Request(int id, User user, String description, String justification, LocalDate dateNeeded,
-			String deliveryMode, String status, double total, LocalDateTime submittedDate) {
+			String deliveryMode, String status, double total, LocalDateTime submittedDate, String reasonForRejection) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -33,6 +34,7 @@ public class Request {
 		this.status = status;
 		this.total = total;
 		this.submittedDate = submittedDate;
+		this.reasonForRejection = reasonForRejection;
 	}
 
 	public Request() {
@@ -111,11 +113,20 @@ public class Request {
 		this.submittedDate = submittedDate;
 	}
 
+	public String getReasonForRejection() {
+		return reasonForRejection;
+	}
+
+	public void setReasonForRejection(String reasonForRejection) {
+		this.reasonForRejection = reasonForRejection;
+	}
+
 	@Override
 	public String toString() {
 		return "Request [id=" + id + ", user=" + user + ", description=" + description + ", justification="
 				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", status=" + status
-				+ ", total=" + total + ", submittedDate=" + submittedDate + "]";
+				+ ", total=" + total + ", submittedDate=" + submittedDate + ", reasonForRejection=" + reasonForRejection
+				+ "]";
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.prs.web;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,16 +24,34 @@ public class RequestController {
 	public List<Request> getAll() {
 		return requestRepo.findAll();
 	}
-
+	
 	@GetMapping("/{id}")
-	public Request getById(@PathVariable int id) {
-		return requestRepo.findById(id).get();
+	public Optional<Request> getById(@PathVariable int id) {
+		return requestRepo.findById(id);
+	}
+
+	@GetMapping("/list-review/{id}")
+	public List<Request> getReview(@PathVariable int id){
+		List<Request> requestList = requestRepo.findAll();
+		List<Request> reviewList = new ArrayList<>();
+		for (Request request: requestList) {
+			if (request.getStatus().equalsIgnoreCase("Review") && request.getUser().getId() != id) {
+				reviewList.add(request);
+			}
+		}
+		return reviewList;
 	}
 	
-	@PostMapping("/") 
+	@PostMapping("/")
 	public Request create(@RequestBody Request request) {
+		request.setStatus("New");
+		request.setTotal(0);
+		LocalDateTime dateSubmitted = LocalDateTime.now();
+		request.setSubmittedDate(dateSubmitted);
+		request.setReasonForRejection(null);
 		return requestRepo.save(request);
 	}
+	
 	
 	@PutMapping("/submit-review")
 	public Request submitReview(@RequestBody Request request) {
@@ -48,16 +67,6 @@ public class RequestController {
 		return request;	
 	}
 	
-//	@GetMapping("/list-review/{id}")
-//	public List<Request> listReview(@PathVariable int id)
-//	//id pass as variable is the signed in userId
-//	//Call custom method which gets all requests in 'Review' status and userID
-//	List<Request> requestList = requestRepo.findAll();
-//	List<Request> reviewable = newArrayList<>();
-//	
-//	//!= id
-//	//Return List<Request>
-	
 	
 	@DeleteMapping("/{id}") 
 	public Request delete(@PathVariable int id) {
@@ -69,6 +78,18 @@ public class RequestController {
 			System.out.println("Delete Error - request not found for id: "+id);
 		}
 		return request.get();
+	}
+	
+	@PutMapping("/approve")
+	public Request approve(@RequestBody Request request) {
+		request.setStatus("Approved");
+		return request;
+	}
+	
+	@PutMapping("/reject")
+	public Request reject(@RequestBody Request request) {
+		request.setStatus("Rejected");
+		return request;
 	}
 
 }
