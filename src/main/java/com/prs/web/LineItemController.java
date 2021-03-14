@@ -62,7 +62,9 @@ public class LineItemController {
 	
 	@PutMapping("/") 
 	public LineItem update(@RequestBody LineItem lineItem) {
-		return lineItemRepo.save(lineItem);
+		lineItemRepo.save(lineItem);
+		recalculateLineItemValue(lineItem);
+		return lineItem;
 	}
 	
 	@DeleteMapping("/{id}") 
@@ -70,6 +72,7 @@ public class LineItemController {
 		Optional<LineItem> lineItem = lineItemRepo.findById(id);
 		if (lineItem.isPresent()) {
 			lineItemRepo.delete(lineItem.get());
+			recalculateLineItemValue(lineItem.get().getRequest());
 		}
 		else {
 			System.out.println("Delete Error - lineItem not found for id: "+id);

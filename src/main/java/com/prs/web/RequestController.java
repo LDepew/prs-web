@@ -52,6 +52,11 @@ public class RequestController {
 		return requestRepo.save(request);
 	}
 	
+	@PutMapping("/") 
+	public Request update(@RequestBody Request request) {
+		return requestRepo.save(request);
+	}
+	
 	
 	@PutMapping("/submit-review")
 	public Request submitReview(@RequestBody Request request) {

@@ -41,13 +41,13 @@ public class UserController {
 	//authenticate via Get
 		@GetMapping("")
 		public User login(@RequestParam String username, @RequestParam String password) {
-			return userRepo.findByUserNameAndPassword(userName, password);
+			return userRepo.findByUsernameAndPassword(username, password);
 		}
 		
 		//authenticate via Post
 		@PostMapping("/login")
 		public User login(@RequestBody User user) {
-			return userRepo.findByUserNameAndPassword(user.getUserName(), user.getPassword());
+			return userRepo.findByUsernameAndPassword(user.getUserName(), user.getPassword());
 		}
 	
 	@DeleteMapping("/{id}") 
