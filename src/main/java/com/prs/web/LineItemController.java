@@ -72,7 +72,7 @@ public class LineItemController {
 		Optional<LineItem> lineItem = lineItemRepo.findById(id);
 		if (lineItem.isPresent()) {
 			lineItemRepo.delete(lineItem.get());
-			recalculateLineItemValue(lineItem.get().getRequest());
+			recalculateLineItemValue(lineItem.get());
 		}
 		else {
 			System.out.println("Delete Error - lineItem not found for id: "+id);
