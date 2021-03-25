@@ -14,7 +14,7 @@ import com.prs.db.UserRepo;
 @RequestMapping("/api/users")
 public class UserController {
 	
-	private static final String userName = null;
+	private static final String username = null;
 	@Autowired
 	private UserRepo userRepo;
 
@@ -47,7 +47,7 @@ public class UserController {
 		//authenticate via Post
 		@PostMapping("/login")
 		public User login(@RequestBody User user) {
-			return userRepo.findByUsernameAndPassword(user.getUserName(), user.getPassword());
+			return userRepo.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 		}
 	
 	@DeleteMapping("/{id}") 
